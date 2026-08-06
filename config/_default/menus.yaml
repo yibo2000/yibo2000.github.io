@@ -1,0 +1,18 @@
+# Navigation Links
+
+main:
+  - name: About
+    url: /
+    weight: 10
+  - name: Models
+    url: /#models
+    weight: 11
+  - name: Experience
+    url: /#experience
+    weight: 12
+  - name: Publications
+    url: /#papers
+    weight: 13
+  - name: Honors
+    url: /#honors
+    weight: 14

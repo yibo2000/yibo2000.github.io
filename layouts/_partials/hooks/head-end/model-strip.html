@@ -1,0 +1,56 @@
+{{/*
+  Models 横向卡片条的滚动控制。
+  取代原来写在 content/_index.md 里的内联 onclick，多做三件事：
+    1. 按"一张卡 + 间距"的实际宽度翻页，而不是写死 360px
+    2. 到头/到尾时把箭头置为 disabled
+    3. 滑到最右端时去掉右缘渐隐遮罩，并遵循 prefers-reduced-motion
+*/}}
+<script>
+  (function () {
+    function init() {
+      var strip = document.getElementById('model-strip');
+      if (!strip) return;
+
+      var buttons = document.querySelectorAll('[data-strip-scroll]');
+      var motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      function pageWidth() {
+        var card = strip.querySelector('.model-card');
+        if (!card) return strip.clientWidth;
+        var gap = parseFloat(getComputedStyle(strip).columnGap || '0') || 0;
+        return card.getBoundingClientRect().width + gap;
+      }
+
+      function sync() {
+        // 子像素滚动位置可能差 1px，留一点容差
+        var maxScroll = strip.scrollWidth - strip.clientWidth;
+        var atStart = strip.scrollLeft <= 1;
+        var atEnd = strip.scrollLeft >= maxScroll - 1;
+        strip.setAttribute('data-at-end', atEnd ? 'true' : 'false');
+        buttons.forEach(function (btn) {
+          var forward = Number(btn.getAttribute('data-strip-scroll')) > 0;
+          btn.disabled = maxScroll <= 1 || (forward ? atEnd : atStart);
+        });
+      }
+
+      buttons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          strip.scrollBy({
+            left: Number(btn.getAttribute('data-strip-scroll')) * pageWidth(),
+            behavior: motion.matches ? 'auto' : 'smooth'
+          });
+        });
+      });
+
+      strip.addEventListener('scroll', sync, { passive: true });
+      window.addEventListener('resize', sync);
+      sync();
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  })();
+</script>

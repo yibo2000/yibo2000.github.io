@@ -1,0 +1,43 @@
+# Custom Font Pack
+# 本地托管的可变字体（均已 subset 到 Latin + 标点 + 箭头，见 assets/dist/font/）:
+#   heading: ByteSans.var.woff2   body: MiSans.var.woff2   nav: Inter.var.woff2
+# 站点为纯英文（hugo.yaml: hasCJKLanguage=false），CJK 回退到系统字体栈。
+#
+# 注意 families 里的名字要能匹配 assets/dist/font/<Name>* ，否则主题会退到
+# Google Fonts CDN；code 用 system-mono 走系统等宽栈，不额外请求字体。
+
+hugoblox:
+  meta:
+    format: "hugoblox-font@1"
+    name: "Local VF"
+    vendor: "custom"
+    version: "1.1.0"
+    # ByteSans（字节跳动）与 MiSans（小米）各有自己的授权条款，非 OFL；
+    # 仅 Inter 是 OFL-1.1。自托管前请确认各自条款。
+    license: "mixed — see note above"
+    description: "Self-hosted variable fonts: ByteSans headings, MiSans body, Inter nav"
+
+  families:
+    heading: "ByteSans"
+    body: "MiSans"
+    nav: "Inter"
+    code: "system-mono"
+
+  weights:
+    heading: [500, 600]
+    body: [400, 500, 600]
+    code: [400]
+
+  leading:
+    heading: 1.25
+    body: 1.7
+    code: 1.5
+
+  tracking:
+    heading: "0"
+    body: "0"
+
+  variable:
+    heading: true
+    body: true
+    code: true

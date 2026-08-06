@@ -1,0 +1,6 @@
+{{/*
+  Site override: 不输出任何 favicon，让浏览器显示默认图标。
+  返回空 resource，site_head.html 中的 with 守卫会跳过所有 icon <link> 输出。
+*/}}
+
+{{ return dict "resource" nil "type" "" "is_svg" false }}

@@ -1,0 +1,95 @@
+schema: hugoblox/author/v1
+slug: me
+is_owner: true
+name:
+  display: Yibo He
+  given: Yibo
+  family: He
+status:
+  icon: "🌙"
+role: Member of Technical Staff, Moonshot AI
+bio: |
+  Yibo He is a Member of Technical Staff at Moonshot AI (Kimi), where he post-trains Kimi's
+  coding models on the RL team. He is also a Ph.D. student in Computer Science at Peking
+  University, advised by Prof. Tao Xie. His work centers on teaching models to solve
+  real-world software engineering problems — and shipping that work into production models.
+
+affiliations:
+  - name: Moonshot AI (Kimi)
+    url: https://www.moonshot.cn/
+  - name: Peking University
+    url: https://www.pku.edu.cn/
+
+links:
+  - icon: at-symbol
+    url: mailto:yibohe@pku.edu.cn
+    label: Email
+  - icon: brands/github
+    url: https://github.com/yibo2000
+    label: GitHub
+
+interests:
+  - LLM Post-Training
+  - Coding Agents
+  - Software Engineering
+  - Compilers & Systems
+
+education:
+  - degree: PhD in Computer Science
+    institution: Peking University
+    year: "2022 – 2027 (expected)"
+    start: 2022-09-01
+    end: 2027-07-01
+    summary: |
+      Advised by Prof. Tao Xie.
+  - degree: BSc in Computer Science · Minor in Sociology
+    institution: Peking University
+    year: "2018 – 2022"
+    start: 2018-09-01
+    end: 2022-07-01
+    summary: |
+      Peking University Outstanding Undergraduate, Class of 2022.
+
+experience:
+  - role: Intern → Member of Technical Staff
+    org: Moonshot AI · RL Team
+    start: 2025-12-01
+    summary: |
+      Post-training coding agents across real-world domains — compiler repair, reverse
+      engineering, test generation, kernel optimization. User-centric alignment, internal
+      RL infrastructure, and evaluation benchmarks.
+  - role: Research Intern · Rhino-Bird Research Elite Program
+    org: Tencent · WXG
+    start: 2025-06-01
+    end: 2025-09-01
+    summary: |
+      LLM-driven test generation for large-scale C++/ObjC codebases; built SimdBench.
+  - role: Research Intern
+    org: ByteDance · Seed
+    start: 2023-10-01
+    end: 2024-02-01
+    summary: |
+      Co-built InfiBench (NeurIPS 2024), an open-ended QA benchmark for code LLMs.
+  - role: Development Intern
+    org: Alibaba · Taobao
+    start: 2021-06-01
+    end: 2021-09-01
+    summary: |
+      Extracted valuable segments from live-streaming videos with NLP techniques.
+
+awards:
+  - title: Outstanding Graduate
+    awarder: Peking University
+    date: "2022-07-01"
+  - title: Award for Scientific Research
+    awarder: Peking University
+    date: "2021-12-01"
+  - title: Suzhou Industrial Park Scholarship
+    awarder: Peking University
+    date: "2020-12-01"
+  - title: Merit Student
+    awarder: Peking University
+    date: "2020-12-01"
+  - title: Award for Academic Excellence
+    awarder: Peking University
+    date: "2019-12-01"

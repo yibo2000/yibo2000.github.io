@@ -1,0 +1,550 @@
+/* ══════════════════════════════════════════════════════════════
+   Yibo He's homepage — Kimi / Moonshot style skin for HugoBlox
+   - Inter typeface (seed.bytedance.com 同款，本地可变字体)
+   - Monochrome tokens à la kimi.com (--Labels-Primary/Secondary)
+   - Custom hero / model cards / publication list
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Design tokens（kimi.com 风格）──────────────────────────── */
+/* 灰阶按 WCAG AA（正文 4.5:1）校准过，改动前请重新测对比度：
+   浅色底 #faf7f0 / 卡片 #fdfaf4，深色底 #131009。 */
+:root {
+  --lp: rgba(43, 36, 30, 0.92);     /* Labels-Primary（暖墨）  13.1:1 */
+  --ls: rgba(58, 48, 38, 0.80);     /* Labels-Secondary         6.5:1 */
+  --lt: rgba(58, 48, 38, 0.70);     /* Labels-Tertiary          4.9:1 */
+  --hair: rgba(110, 88, 60, 0.16);  /* hairline（暖棕）非文本，不参与对比度 */
+  --card: #fdfaf4;
+  --accent: #b45f2d;
+}
+.dark {
+  --lp: rgba(243, 236, 226, 0.93);
+  --ls: rgba(243, 236, 226, 0.62); /* 6.7:1 */
+  --lt: rgba(243, 236, 226, 0.58); /* 6.0:1 */
+  --hair: rgba(243, 236, 226, 0.14);
+  --card: #1a1512;
+  --accent: #d99a66;
+}
+
+::selection { background: #0a0a0a; color: #fff; }
+.dark ::selection { background: #fafafa; color: #0a0a0a; }
+
+/* Kimi 博客式轻盈正文（MiSans VF 可变字重） */
+body { font-weight: 380; }
+
+/* ══════════════ Hero（左头像+姓名 / 右 Bio / 底部居中按钮）══════════════ */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 1.25rem;
+}
+.hero-top {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+.hero-avatar {
+  width: 172px;
+  height: 172px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin: 0;
+  box-shadow: 0 0 0 1px var(--hair), 0 10px 34px rgba(0, 0, 0, 0.12);
+}
+.hero-name {
+  font-size: 2.4rem;
+  line-height: 1.15;
+  font-weight: 500;
+  letter-spacing: 0;
+  margin: 0 0 0.35rem;
+  color: var(--lp);
+}
+.hero-role {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--ls);
+  margin: 0 0 1.1rem;
+}
+.hero-role b { font-weight: 500; color: var(--lp); }
+.hero-bio {
+  font-size: 0.99rem;
+  line-height: 1.8;
+  color: var(--ls);
+  max-width: 34rem;
+  margin: 0;
+  text-align: left;
+}
+.hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 1.75rem;
+}
+.hpill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 0, 0, 0.22);
+  font-size: 0.87rem;
+  font-weight: 500;
+  color: var(--lp);
+  text-decoration: none !important;
+  transition: all 0.16s ease;
+  background: transparent;
+}
+.dark .hpill { border-color: rgba(255, 255, 255, 0.30); }
+.hpill:hover { transform: translateY(-1px); border-color: var(--lp); }
+.hpill-solid {
+  background: #0a0a0a;
+  border-color: #0a0a0a;
+  color: #fff;
+}
+.dark .hpill-solid { background: #fafafa; border-color: #fafafa; color: #0a0a0a; }
+.hpill-solid:hover { border-color: #0a0a0a; opacity: 0.85; }
+.dark .hpill-solid:hover { border-color: #fafafa; }
+
+/* WeChat 二维码：hover 浮出预览，点击/触屏直接打开原图 */
+.hpill-qr { position: relative; }
+.hpill-qr .qr-pop {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  margin: 0; /* prose 会给 img 加 2em 上下边距，必须盖掉 */
+  border-radius: 12px;
+  border: 1px solid var(--hair);
+  background: #fff;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+  z-index: 50;
+}
+.hpill-qr:hover .qr-pop { display: block; }
+
+/* ══════════════ Section headers ══════════════ */
+.sec-title {
+  font-size: 1.7rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--lp);
+  margin: 0;
+}
+
+/* 条目级标题与导航栏统一用标题字体（ByteSans），与主标题风格一致 */
+.exp-org,
+.pub-title,
+.navbar {
+  font-family: var(--hb-font-heading);
+}
+.sec-sub {
+  font-size: 0.95rem;
+  color: var(--ls);
+  margin: 0.45rem 0 0;
+}
+
+/* ══════════════ Model cards（kimi blog 卡片 × moonshot 暗色封面）══════════════ */
+.model-card {
+  border: 0.5px solid var(--hair);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--card);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.model-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.10);
+}
+.dark .model-card:hover { box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5); }
+.model-cover {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #050505;
+}
+.model-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+.model-card:hover .model-cover img { transform: scale(1.03); }
+.model-cover-meta {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: 2.5rem 1.15rem 0.85rem;
+  /* 封面明暗不一（K3 是浅灰底），渐变要够重才能托住白字 */
+  background: linear-gradient(to top,
+    rgba(0, 0, 0, 0.82) 0%,
+    rgba(0, 0, 0, 0.45) 45%,
+    transparent 100%);
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+.model-cover-meta .model-year {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+  font-variant-numeric: tabular-nums;
+}
+.model-cover-meta h3 {
+  margin: 0.15rem 0 0;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #fff;
+  letter-spacing: 0;
+}
+.model-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.8rem 1.15rem 0.95rem;
+}
+.model-body p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--ls);
+}
+.model-role {
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--lt);
+}
+
+/* ══════════════ Publication list（首页）══════════════ */
+.pub-list {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--hair);
+}
+.pub-item { padding: 1.05rem 0; border-bottom: 1px solid var(--hair); }
+.pub-item:last-child { border-bottom: none; }
+.pub-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.25rem;
+}
+.pub-title {
+  font-weight: 500;
+  font-size: 1.0rem;
+  line-height: 1.55;
+  color: var(--lp);
+  text-decoration: none !important;
+}
+.pub-title:hover { text-decoration: underline !important; text-underline-offset: 3px; }
+.pub-venue {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--lt);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.pub-meta {
+  margin: 0.3rem 0 0;
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--lt);
+}
+.pub-meta b { font-weight: 600; color: var(--ls); }
+.pub-meta i { font-style: normal; color: var(--ls); }
+.pub-meta a { color: var(--ls); text-decoration: underline; text-underline-offset: 2px; }
+.hero-bio a, .exp-desc a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+
+/* ══════════════ 视觉层次：色带 + 卡片 ══════════════ */
+/* Experience / Education 双栏：轻卡片 */
+.two-col > .col {
+  background: var(--card);
+  border: 1px solid var(--hair);
+  border-radius: 14px;
+  padding: 1.4rem 1.75rem 0.85rem;
+}
+.two-col > .col-edu {
+  border: 1px solid var(--hair);
+  padding-left: 1.75rem;
+}
+.two-col .exp-list,
+.two-col .mini-list {
+  border-top: none;
+  margin-top: 1rem;
+}
+
+/* ══════════════ Experience / Education 列表（带公司 logo）══════════════ */
+/* 左右两列布局：各 50%，中间细分隔线 */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.75rem;
+  align-items: start;
+}
+.col-edu {
+  border-left: 1px solid var(--hair);
+  padding-left: 2.5rem;
+}
+/* 学校名与日期上下排，避免长日期挤压换行 */
+.col-edu .exp-row {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+}
+@media (max-width: 860px) {
+  .two-col { grid-template-columns: 1fr; gap: 2.5rem; }
+  .col-edu { border-left: none; padding-left: 0; }
+}
+
+.exp-list {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--hair);
+}
+.exp-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+  padding: 1.05rem 0;
+  border-bottom: 1px solid var(--hair);
+}
+.exp-item:last-child { border-bottom: none; }
+.exp-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid var(--hair);
+  background: #fff;
+  object-fit: contain;
+  padding: 5px;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+.exp-main { flex: 1; min-width: 0; }
+.exp-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+.exp-org {
+  font-weight: 500;
+  font-size: 1.0rem;
+  color: var(--lp);
+}
+.exp-date {
+  font-size: 0.78rem;
+  color: var(--lt);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.exp-role { margin: 0.15rem 0 0; font-size: 0.88rem; color: var(--ls); }
+.exp-desc { margin: 0.25rem 0 0; font-size: 0.86rem; color: var(--lt); }
+
+/* 横向滚动模型卡片（Seed models 风格：可拖拽/箭头滚动、scroll-snap） */
+.strip-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1rem;
+}
+.strip-nav { display: flex; gap: 0.5rem; }
+.strip-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--hair);
+  background: transparent;
+  color: var(--ls);
+  font-size: 0.9rem;
+  line-height: 1;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  padding: 0;
+}
+.strip-btn:hover { border-color: var(--lp); color: var(--lp); }
+.strip-btn[disabled] {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+.model-strip {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  /* overflow-x:auto 会把 overflow-y 也变成 auto，留出上边距免得 hover 抬升被裁掉 */
+  margin-top: calc(1.5rem - 6px);
+  padding-top: 6px;
+  padding-bottom: 0.75rem;
+  scrollbar-width: thin;
+  scrollbar-color: var(--hair) transparent;
+  /* 右缘渐隐，提示"还能横滑"，而不是看起来被切断；滑到底时由 JS 去掉 */
+  --strip-fade: 48px;
+  mask-image: linear-gradient(to right, #000 calc(100% - var(--strip-fade)), transparent 100%);
+}
+.model-strip[data-at-end="true"] { mask-image: none; }
+@media (prefers-reduced-motion: reduce) {
+  .model-strip { scroll-behavior: auto; }
+}
+.model-strip::-webkit-scrollbar { height: 4px; }
+.model-strip::-webkit-scrollbar-track { background: transparent; }
+.model-strip::-webkit-scrollbar-thumb { background: var(--hair); border-radius: 2px; }
+.model-strip .model-card {
+  flex: 0 0 330px;
+  scroll-snap-align: start;
+}
+@media (max-width: 640px) {
+  .model-strip .model-card { flex-basis: 78vw; }
+}
+.model-card { display: flex; flex-direction: column; }
+.model-body { flex: 1; }
+a.model-card, .prose a.model-card {
+  text-decoration: none !important;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* 容器加宽 + prose 样式重置（markdown block 默认 max-w-prose 偏窄） */
+#hero .max-w-prose, #models .max-w-prose,
+#experience .max-w-prose, #papers .max-w-prose, #honors .max-w-prose {
+  max-width: 66rem !important;
+}
+/* 关键：flex 父级 items-center 会让 prose 收缩到内容宽，强制撑满对齐 */
+#hero .prose, #models .prose,
+#experience .prose, #papers .prose, #honors .prose {
+  width: 100% !important;
+}
+.prose .model-cover img,
+.prose .hero-avatar,
+.prose .exp-logo { margin: 0; }
+.prose .model-cover-meta h3 { margin: 0.15rem 0 0; }
+.prose .exp-role, .prose .exp-desc, .prose .pub-meta { margin-top: 0.2rem; margin-bottom: 0; }
+
+/* ══════════════ Honors / Services 紧凑列表 ══════════════ */
+.mini-list {
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--hair);
+}
+.mini-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.68rem 0;
+  border-bottom: 1px solid var(--hair);
+  font-size: 0.92rem;
+  color: var(--lp);
+}
+.mini-item:last-child { border-bottom: none; }
+.mini-date {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  color: var(--lt);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.mini-line {
+  padding: 0.68rem 0;
+  border-bottom: 1px solid var(--hair);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--ls);
+}
+.mini-line:last-child { border-bottom: none; }
+.mini-line b { color: var(--lp); font-weight: 500; }
+.mini-note { margin: 0.75rem 0 0; font-size: 0.82rem; color: var(--lt); }
+
+/* ══════════════ 页脚 ══════════════ */
+footer, .footer { color: var(--lt); }
+/* 隐藏 "Made with Hugo Blox / Duplicate this template" 署名行，保留版权行 */
+.page-footer .powered-by:has(a) { display: none; }
+
+/* ══════════════ 响应式 ══════════════ */
+@media (max-width: 640px) {
+  .hero-top { flex-direction: column; gap: 1.5rem; width: 100%; }
+  /* flex 列布局里子项按内容定宽（fit-content），长文案会把容器撑出视口 */
+  .hero-top > div, .hero-links { width: 100%; }
+  .hero-avatar { width: 104px; height: 104px; }
+  .hero-name { font-size: 2.2rem; }
+  .pub-row { flex-direction: column; gap: 0.2rem; }
+  /* 经历条目名称/日期上下排，避免公司名被挤压折行 */
+  .exp-row { flex-direction: column; align-items: flex-start; gap: 0.1rem; }
+}
+
+/* 减少动效偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .model-cover img, .model-card, .hpill { transition: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* 锚点导航平滑滚动（scroll-padding-top 由主题设置，此处只加动效） */
+html { scroll-behavior: smooth; }
+
+/* 键盘导航焦点环：暖色 accent，鼠标点击不出现 */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ══════════════ 人味细节 ══════════════ */
+/* 链接悬停暖色 */
+.pub-title:hover { color: var(--accent); }
+.hpill:hover { border-color: var(--accent); color: var(--accent); }
+.hpill-solid:hover { color: #fff; border-color: #0a0a0a; }
+.dark .hpill-solid:hover { color: #0a0a0a; border-color: #fafafa; }
+
+/* 暖纸底色 */
+body { background: #faf7f0; }
+.dark body, .dark { background: #131009; }
+
+/* 纸感颗粒：极淡的噪点罩层，纯色底就不那么"数码"。
+   SVG feTurbulence 内联 data-URI，无额外请求；fixed 全屏 + pointer-events:none，
+   均匀罩在包括卡片在内的所有内容上，才像真的纸。 */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.028;
+}
+.dark body::after { opacity: 0.022; }
+
+/* Hero 暖色微光：首屏的视觉重心，淡到刚好察觉不出 */
+.hero { position: relative; }
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(56rem, 100vw);
+  height: 26rem;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(180, 95, 45, 0.055), transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+.dark .hero::before {
+  background: radial-gradient(50% 50% at 50% 50%, rgba(217, 154, 102, 0.05), transparent 70%);
+}
+
+/* 主题包的 header/footer 是冷灰（#f6f8fa），压在暖纸底色上会有一道冷暖接缝。
+   这里跟正文底色对齐；navbar 自带 shadow，去掉色差也不会糊在一起。 */
+:root {
+  --hb-color-header-bg: #faf7f0;
+  --hb-color-footer-bg: #faf7f0;
+}
+.dark {
+  --hb-color-header-bg: #131009;
+  --hb-color-footer-bg: #131009;
+}

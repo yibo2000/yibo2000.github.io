@@ -1,0 +1,9 @@
+{{/*
+  首屏字体 preload。
+  三个可变字体都在首屏用到（ByteSans 标题 / MiSans 正文 / Inter 导航），
+  不等 CSS 里的 @font-face 生效再拉取，避免文字闪烁（FOUT）。
+  路径对应 assets/dist/font/，由主题的字体包机制发布到 /dist/font/。
+*/}}
+<link rel="preload" href="{{ "/dist/font/MiSans.var.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "/dist/font/ByteSans.var.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ "/dist/font/Inter.var.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
