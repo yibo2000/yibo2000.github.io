@@ -13,7 +13,7 @@ sections:
       text: |-
         <div class="hero">
           <div class="hero-top">
-            <img class="hero-avatar" src="/uploads/avatar.webp?v=3" alt="Yibo He"
+            <img class="hero-avatar" src="/uploads/avatar.webp?v=4" alt="Yibo He"
                  width="344" height="344" fetchpriority="high" decoding="async">
             <div>
               <h1 class="hero-name">Yibo He</h1>
